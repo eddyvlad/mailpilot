@@ -1,0 +1,33 @@
+locals {
+  default_action = {
+    add_label_ids    = [var.label_id]
+    remove_label_ids = ["INBOX", "SPAM"]
+  }
+
+  default_criteria = {
+    exclude_chats  = "false"
+    has_attachment = "false"
+  }
+
+  criterias = {
+    amazon_delivered = {
+      query = "from:\"amazon\" subject:\"been delivered\""
+    }
+    # Add more criterias here...
+  }
+}
+
+resource "gmailfilter_filter" "delivery" {
+  for_each = local.criterias
+
+  action {
+    add_label_ids    = local.default_action.add_label_ids
+    remove_label_ids = local.default_action.remove_label_ids
+  }
+
+  criteria {
+    exclude_chats  = local.default_criteria.exclude_chats
+    has_attachment = local.default_criteria.has_attachment
+    query          = lookup(each.value, "query", null)
+  }
+}
