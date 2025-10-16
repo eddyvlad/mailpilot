@@ -106,7 +106,29 @@ module "bills_filter" {
 }
 ```
 
-S3 backend example (add in `terraform.tf`):
+## Gmail system labels
+
+You can reference these built-in Gmail system labels directly without going through `gmailfilter_label.*`:
+
+- CHAT
+- SENT
+- INBOX
+- IMPORTANT
+- TRASH
+- DRAFT
+- SPAM
+- CATEGORY_FORUMS
+- CATEGORY_UPDATES
+- CATEGORY_PERSONAL
+- CATEGORY_PROMOTIONS
+- CATEGORY_SOCIAL
+- YELLOW_STAR
+- STARRED
+- UNREAD
+
+## S3 backend example
+
+For you to add to your `terraform.tf`
 
 ```hcl
 terraform {
@@ -387,7 +409,3 @@ curl -s -H "Authorization: Bearer $TOKEN" \
   'https://gmail.googleapis.com/gmail/v1/users/me/settings/filters' \
 | jq -r '.filter[] | {id, criteria, action}'
 ```
-
-## Other resources
-
-**Step by step guide:** https://eddyhidayat.com/article/terraform-gmail-filters
