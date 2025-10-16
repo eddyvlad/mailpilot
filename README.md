@@ -302,6 +302,15 @@ terraform plan -target=gmailfilter_filter.nl_archive
 terraform apply -target=gmailfilter_filter.nl_archive
 ```
 
+Import Gmail system labels once to seed the Terraform state:
+
+```bash
+terraform init
+./scripts/labels-system-import.sh
+```
+
+The helper script runs `terraform import` for all Gmail system labels defined in `labels-system.tf`, so you only need to execute it the first time you adopt this configuration. Run it from the repository root after authenticating with Gmail and initializing Terraform.
+
 ---
 
 ## Security
